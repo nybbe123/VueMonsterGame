@@ -7,15 +7,36 @@ const app = Vue.createApp({
     return {
       playerHealth: 100,
       monsterHealth: 100,
+      specialAttackValue: 0,
     };
   },
-  watch: {},
+  watch: {
+    playerHealth(value) {
+      if (value <= 0) {
+        alert("monster has defeated you...");
+      }
+    },
+    monsterHealth(value) {
+      if (value <= 0) {
+        alert("You defeated the monster!");
+      }
+    },
+  },
   computed: {},
   methods: {
     attackMonster() {
       const attackValue = getRandomValue(5, 12);
       this.monsterHealth -= attackValue;
+      this.specialAttackValue += 1;
       this.attackPlayer();
+    },
+    specialAttackMonster() {
+      if (this.specialAttackValue >= 5) {
+        const attackValue = getRandomValue(20, 35);
+        this.monsterHealth -= attackValue;
+        this.specialAttackValue = 0;
+        this.attackPlayer();
+      }
     },
     attackPlayer() {
       const attackValue = getRandomValue(8, 15);
