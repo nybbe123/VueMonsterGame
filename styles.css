@@ -121,3 +121,9 @@ button:disabled {
 .inactive {
   background-color: #a0a0a0;
 }
+
+#log {
+  max-height: 500px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

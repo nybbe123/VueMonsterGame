@@ -29,21 +29,26 @@
           <div class="healthbar__value" :style="playerBarStyles"></div>
         </div>
       </section>
-      <section id="controls">
+      <section class="container" v-if="playerHealth <= 0 || monsterHealth <= 0">
+        <h2>Game over</h2>
+        <p>{{gameOverStatus}}</p>
+        <button @click="resetGame">New game</button>
+      </section>
+      <section id="controls" v-else>
         <button @click="attackMonster">ATTACK</button>
-        <button
-          :class="{inactive: specialAttackValue < 5}"
-          @click="specialAttackMonster"
-        >
+        <button :class="specialAttackClass" @click="specialAttackMonster">
           SPECIAL ATTACK
         </button>
         <button @click="healPlayer">HEAL</button>
-        <button>SURRENDER</button>
+        <button @click="surrender">SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
         <ul>
-          <li></li>
+          <li v-for="battleLog in battleLogs">
+            {{battleLog.actionBy + ' ' + battleLog.actionType + ' ' +
+            battleLog.actionValue}}
+          </li>
         </ul>
       </section>
     </div>
